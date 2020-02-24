@@ -3,6 +3,7 @@ import CardList from '../components/CardList'
 import SearchBox from '../components/SearchBox'
 import Loader from 'react-loader-spinner'
 import Scroll from '../components/Scroll'
+import ErrorBoundry from '../components/ErrorBoundry'
 
 class App extends Component {
   constructor(props) {
@@ -14,7 +15,9 @@ class App extends Component {
   }
 
   componentDidMount() {
-    fetch('https://jsonplaceholder.typicode.com/users').then(response => response.json()).then(users => this.setState({robots: users}))
+    fetch('https://jsonplaceholder.typicode.com/users')
+    .then(response => response.json())
+    .then(users => this.setState({robots: users}))
 
   }
 
@@ -35,7 +38,9 @@ class App extends Component {
 
         <SearchBox searchChange={this.onSearchChange}/>
         <Scroll>
+          <ErrorBoundry>
           <CardList robots={filterRobots}/>
+          </ErrorBoundry>
         </Scroll>
       </div>)
     }
